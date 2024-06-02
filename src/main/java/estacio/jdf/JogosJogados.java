@@ -7,13 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import java.sql.*;
 
-public class hLog extends Application {
+//Aqui é a página de histórico
+public class JogosJogados extends Application {
 
     private static final String DATABASE_URL = "jdbc:h2:~/history";
 

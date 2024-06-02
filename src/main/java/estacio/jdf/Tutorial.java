@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -26,9 +27,9 @@ public class Tutorial extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        //Layout
         VBox root = new VBox();
         Random random = new Random();
-        //String palavraEscolhida = Recursos.OBJETOS[random.nextInt(Recursos.OBJETOS.length)];
         String palavraEscolhida = "SKOLL"; //Usada apenas no tutorial
         palavraLista.clear();
         for (char letra : palavraEscolhida.toCharArray()) {
@@ -49,6 +50,7 @@ public class Tutorial extends Application {
         }
         root.getChildren().add(caixaImagem);
 
+        //Aparência da palavra a ser adivinhada
         palavraLabel = new Text(getPalavraEscondida());
         palavraLabel.setFont(Font.font("Arial", 100));
         palavraLabel.setFill(Color.WHITE);
@@ -67,6 +69,7 @@ public class Tutorial extends Application {
         caixaPalavra.setAlignment(Pos.CENTER);
         root.getChildren().add(caixaPalavra);
 
+        //Botões virtuais
         GridPane painelBotoes = new GridPane();
         painelBotoes.setPadding(new Insets(10));
         painelBotoes.setHgap(5);
@@ -77,6 +80,18 @@ public class Tutorial extends Application {
         for (char c = 'A'; c <= 'Z'; c++) {
             Button botao = new Button(String.valueOf(c));
             botao.setPrefSize(40, 40);
+            if (!botao.getStyle().equals("-fx-background-color: green;") && !botao.getStyle().equals("-fx-background-color: red;"))  {
+                botao.setStyle("-fx-background-color: #3F1616; -fx-text-fill: white; -fx-background-radius: 5px;");
+                DropShadow shadow = new DropShadow();
+                shadow.setColor(Color.WHITE);
+                shadow.setRadius(20);
+                botao.setOnMouseEntered(e -> {
+                    botao.setEffect(shadow);
+                });
+                botao.setOnMouseExited(e -> {
+                    botao.setEffect(null);
+                });
+            }
             // Primeiro popup explicando quantas chances a pessoa tem até perder
             botao.setOnAction(e -> {
                 char letra = botao.getText().charAt(0);
@@ -171,6 +186,8 @@ public class Tutorial extends Application {
 
 
         primaryStage.show();
+        //O popup ficou embaixo para que ele não seja aberto
+        //antes do programa, visando o agradável
         InicioTutorial.mostrar(true, primaryStage);
     }
 

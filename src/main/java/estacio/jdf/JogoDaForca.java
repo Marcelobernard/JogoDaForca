@@ -16,8 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.shape.Circle;
-import java.sql.*;
+import javafx.scene.effect.DropShadow;
 
 public class JogoDaForca extends Application {
     int foto = 0;
@@ -29,17 +28,19 @@ public class JogoDaForca extends Application {
     public void start(Stage primaryStage) {
         VBox root = new VBox();
         Random random = new Random();
-        //String palavraEscolhida = Recursos.OBJETOS[random.nextInt(Recursos.OBJETOS.length)];
-        String palavraEscolhida = "a"; //Usado para testes
+        String palavraEscolhida = Recursos.OBJETOS[random.nextInt(Recursos.OBJETOS.length)];
+        //String palavraEscolhida = "a"; //Usado para testes
         palavraLista.clear();
         for (char letra : palavraEscolhida.toCharArray()) {
             letra = Character.toUpperCase(letra);
             palavraLista.add(letra);
         }
 
+        //Onde escolho a imagem a do jogo
         ImageView imageView = new ImageView();
         HBox caixaImagem = new HBox(imageView);
         caixaImagem.setAlignment(Pos.CENTER);
+        //Apenas uma verificação padrão que foi mais usada no início do código
         try {
             Image imagem = new Image("boneco40.png");
             imageView.setImage(imagem);
@@ -50,6 +51,7 @@ public class JogoDaForca extends Application {
         }
         root.getChildren().add(caixaImagem);
 
+        //Aparência da palavra a ser adivinhada
         palavraLabel = new Text(getPalavraEscondida());
         palavraLabel.setFont(Font.font("Arial", 100));
         palavraLabel.setFill(Color.WHITE);
@@ -68,6 +70,7 @@ public class JogoDaForca extends Application {
         caixaPalavra.setAlignment(Pos.CENTER);
         root.getChildren().add(caixaPalavra);
 
+        //Botões virtuais
         GridPane painelBotoes = new GridPane();
         painelBotoes.setPadding(new Insets(10));
         painelBotoes.setHgap(5);
@@ -78,8 +81,20 @@ public class JogoDaForca extends Application {
         for (char c = 'A'; c <= 'Z'; c++) {
             Button botao = new Button(String.valueOf(c));
             botao.setPrefSize(40, 40);
+            char letra = botao.getText().charAt(0);
+            if (!botao.getStyle().equals("-fx-background-color: green;") && !botao.getStyle().equals("-fx-background-color: red;"))  {
+                botao.setStyle("-fx-background-color: #3F1616; -fx-text-fill: white; -fx-background-radius: 5px;");
+                DropShadow shadow = new DropShadow();
+                shadow.setColor(Color.WHITE);
+                shadow.setRadius(20);
+                botao.setOnMouseEntered(e -> {
+                    botao.setEffect(shadow);
+                });
+                botao.setOnMouseExited(e -> {
+                    botao.setEffect(null);
+                });
+            }
             botao.setOnAction(e -> {
-                char letra = botao.getText().charAt(0);
                 if (palavraLista.contains(letra) && !letrasCorretas.contains(letra)) {
                     botao.setStyle("-fx-background-color: green;");
                     botao.setDisable(true);
@@ -112,6 +127,7 @@ public class JogoDaForca extends Application {
                     else {
                         Image imagem = new Image("boneco.png");
                         imageView.setImage(imagem);
+                        // Desabilita todos os botões após 6 erros
                         for (Node node : painelBotoes.getChildren()) {
                             if (node instanceof Button) {
                                 ((Button) node).setDisable(true);
@@ -121,6 +137,7 @@ public class JogoDaForca extends Application {
                     }
 
                 }
+                // Verifica se todas as letras foram adivinhadas
                 boolean todasLetrasAdivinhadas = true;
                 for (char letraPalavra : palavraLista) {
                     if (!letrasCorretas.contains(letraPalavra)) {
@@ -134,6 +151,7 @@ public class JogoDaForca extends Application {
                             ((Button) node).setDisable(true);
                         }
                     }
+                    // Exibe popup de vitória se todas as letras foram adivinhadas
                     Vitoria.mostrar(true, primaryStage);
                 }
             });
@@ -164,6 +182,7 @@ public class JogoDaForca extends Application {
         primaryStage.show();
     }
 
+    // Aqui é o método para obter a palavra oculta com letras adivinhadas reveladas
     private String getPalavraEscondida() {
         StringBuilder palavraEscondida = new StringBuilder();
         for (char letra : palavraLista) {

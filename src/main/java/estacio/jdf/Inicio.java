@@ -15,10 +15,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import java.sql.*;
 
-
+//Classe Principal de todo o projeto
+//Ao longo do projeto será visível que
+//todos os println estão marcados como comentário,
+//isso é para impedir a abertura do CMD durante a execução
 public class Inicio extends Application {
     private static final String DATABASE_URL = "jdbc:h2:~/history";
     @Override
+    // Configuração da Interface Gráfica
     public void start(Stage primaryStage) {
         primaryStage.getIcons().add(new Image("murloc.png"));
         primaryStage.setTitle("Jogo da Forca");
@@ -27,41 +31,66 @@ public class Inicio extends Application {
 
         inicializarBancoDeDados();
 
+        //Botões da página inicial
         Button btnComecar = new Button("Começar");
-        btnComecar.setFont(new Font("Arial", 16));
+        btnComecar.setFont(new Font("Arial", 21));
         btnComecar.setStyle("-fx-background-color: #2E3031; -fx-text-fill: white; -fx-background-radius: 5px;");
-        btnComecar.setOnMouseEntered(e -> btnComecar.setStyle("-fx-background-color: #787C7E; -fx-text-fill: white; -fx-background-radius: 5px;"));
-        btnComecar.setOnMouseExited(e -> btnComecar.setStyle("-fx-background-color: #2E3031; -fx-text-fill: white; -fx-background-radius: 5px;"));
+        btnComecar.setOnMouseEntered(e -> {
+            btnComecar.setStyle("-fx-background-color: #787C7E; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnComecar.setFont(new Font("Arial", 26));
+        });
+        btnComecar.setOnMouseExited(e -> {
+            btnComecar.setStyle("-fx-background-color: #2E3031; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnComecar.setFont(new Font("Arial", 21));
+        });
         btnComecar.setOnAction(e -> {
             JogoDaForca jogo = new JogoDaForca();
             jogo.start(primaryStage);
         });
 
         Button btnhLog = new Button("Consultar histórico");
-        btnhLog.setFont(new Font("Arial", 16));
+        btnhLog.setFont(new Font("Arial", 21));
         btnhLog.setStyle("-fx-background-color: #1e28a7; -fx-text-fill: white; -fx-background-radius: 5px;");
-        btnhLog.setOnMouseEntered(e -> btnhLog.setStyle("-fx-background-color: #6632C8; -fx-text-fill: white; -fx-background-radius: 5px;"));
-        btnhLog.setOnMouseExited(e -> btnhLog.setStyle("-fx-background-color: #1e28a7; -fx-text-fill: white; -fx-background-radius: 5px;"));
+        btnhLog.setOnMouseEntered(e -> {
+            btnhLog.setStyle("-fx-background-color: #6632C8; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnhLog.setFont(new Font("Arial", 26));
+        });
+        btnhLog.setOnMouseExited(e -> {
+            btnhLog.setStyle("-fx-background-color: #1e28a7; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnhLog.setFont(new Font("Arial", 21));
+        });
         btnhLog.setOnAction(e -> {
-            hLog jogo = new hLog();
+            JogosJogados jogo = new JogosJogados();
             jogo.start(primaryStage);
         });
 
         Button btnTutorial = new Button("Tutorial");
-        btnTutorial.setFont(new Font("Arial", 16));
+        btnTutorial.setFont(new Font("Arial", 21));
         btnTutorial.setStyle("-fx-background-color: #CB8800; -fx-text-fill: white; -fx-background-radius: 5px;");
-        btnTutorial.setOnMouseEntered(e -> btnTutorial.setStyle("-fx-background-color: #D6A540; -fx-text-fill: white; -fx-background-radius: 5px;"));
-        btnTutorial.setOnMouseExited(e -> btnTutorial.setStyle("-fx-background-color: #CB8800; -fx-text-fill: white; -fx-background-radius: 5px;"));
+        btnTutorial.setOnMouseEntered(e -> {
+            btnTutorial.setStyle("-fx-background-color: #D6A540; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnTutorial.setFont(new Font("Arial", 26));
+        });
+        btnTutorial.setOnMouseExited(e -> {
+            btnTutorial.setStyle("-fx-background-color: #CB8800; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnTutorial.setFont(new Font("Arial", 21));
+        });
         btnTutorial.setOnAction(e -> {
             Tutorial jogo = new Tutorial();
             jogo.start(primaryStage);
         });
 
         Button btnSair = new Button("Sair");
-        btnSair.setFont(new Font("Arial", 16));
+        btnSair.setFont(new Font("Arial", 21));
         btnSair.setStyle("-fx-background-color: #c82333; -fx-text-fill: white; -fx-background-radius: 5px;");
-        btnSair.setOnMouseEntered(e -> btnSair.setStyle("-fx-background-color: #dc3535; -fx-text-fill: white; -fx-background-radius: 5px;"));
-        btnSair.setOnMouseExited(e -> btnSair.setStyle("-fx-background-color: #c82333; -fx-text-fill: white; -fx-background-radius: 5px;"));
+        btnSair.setOnMouseEntered(e -> {
+                btnSair.setStyle("-fx-background-color: #dc3535; -fx-text-fill: white; -fx-background-radius: 5px;");
+                btnSair.setFont(new Font("Arial", 26));
+                });
+        btnSair.setOnMouseExited(e -> {
+                btnSair.setFont(new Font("Arial", 21));
+                btnSair.setStyle("-fx-background-color: #c82333; -fx-text-fill: white; -fx-background-radius: 5px;");
+        });
         btnSair.setOnAction(e -> primaryStage.close());
 
         VBox layout = new VBox(20);
@@ -80,6 +109,10 @@ public class Inicio extends Application {
         primaryStage.show();
     }
 
+    //Inicialização do banco de dados
+    //Aqui fará a primeira conexão e a verificação se o arquivo
+    //já foi aberto alguma vez ou não para decidir se há necessidade
+    //de criar a TABLE do banco de dados
     public static void main(String[] args) {
         launch(args);
     }

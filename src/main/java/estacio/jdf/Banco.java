@@ -2,6 +2,8 @@ package estacio.jdf;
 
 import java.sql.*;
 
+//Aqui é onde será manipulada as informações
+//obtidas de vitória e derrota
 public class Banco {
     public static void inserirNovoRegistro(String condicao) {
         String url = "jdbc:h2:~/history";
