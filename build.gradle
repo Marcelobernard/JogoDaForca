@@ -53,7 +53,7 @@ test {
 jlink {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
-        name = 'Jogo da Forca'
+        name = 'Jogo_da_Forca'
     }
 }
 
