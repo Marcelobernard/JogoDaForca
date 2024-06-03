@@ -96,12 +96,12 @@ public class JogoDaForca extends Application {
             }
             botao.setOnAction(e -> {
                 if (palavraLista.contains(letra) && !letrasCorretas.contains(letra)) {
-                    botao.setStyle("-fx-background-color: green;");
+                    botao.setStyle("-fx-background-color: rgba(0, 120, 0, 1); -fx-text-fill: rgba(0, 0, 0, 1); -fx-opacity: 0.8;");
                     botao.setDisable(true);
                     letrasCorretas.add(letra);
                     palavraLabel.setText(getPalavraEscondida());
                 } else {
-                    botao.setStyle("-fx-background-color: red;");
+                    botao.setStyle("-fx-background-color: rgba(150, 0, 0, 1); -fx-text-fill: rgba(0, 0, 0, 1); -fx-opacity: 0.8;");
                     botao.setDisable(true);
                     foto++;
                     if (foto == 1){

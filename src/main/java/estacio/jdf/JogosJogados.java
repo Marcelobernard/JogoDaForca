@@ -7,12 +7,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import java.sql.*;
 
-//Aqui é a página de histórico
+// Aqui é a página de histórico
 public class JogosJogados extends Application {
 
     private static final String DATABASE_URL = "jdbc:h2:~/history";
@@ -28,7 +31,7 @@ public class JogosJogados extends Application {
 
         VBox resultadosContainer = new VBox(10);
         resultadosContainer.setPadding(new Insets(20));
-        resultadosContainer.setStyle("-fx-background-color: #444444;");
+        resultadosContainer.setStyle("-fx-background-color: rgba(0, 0, 0, 0.75); -fx-background-radius: 10px");
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL);
              Statement statement = connection.createStatement()) {
@@ -39,14 +42,25 @@ public class JogosJogados extends Application {
             while (resultSet.next()) {
                 int playedID = resultSet.getInt("PlayedID");
                 String status = resultSet.getString("Status");
-                String labelText = "Jogo " + playedID + ": " + status;
-                Label label = new Label(labelText);
-                label.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-                label.setStyle("-fx-text-fill: #ffffff;");
-                resultadosContainer.getChildren().add(label);
+
+                Text text1 = new Text("Jogo " + playedID + ": ");
+                text1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                text1.setFill(Color.WHITE);
+
+                Text text2 = new Text(status);
+                text2.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+
+                if (status.equals("Vitória")) {
+                    text2.setFill(Color.GREEN);
+                } else {
+                    text2.setFill(Color.RED);
+                }
+
+                TextFlow textFlow = new TextFlow(text1, text2);
+                resultadosContainer.getChildren().add(textFlow);
             }
         } catch (SQLException e) {
-            //System.out.println("Erro ao consultar o banco de dados: " + e.getMessage());
+            System.out.println("Erro ao consultar o banco de dados: " + e.getMessage());
         }
 
         Button btnVoltar = new Button("Voltar");
@@ -63,7 +77,6 @@ public class JogosJogados extends Application {
         layout.setPadding(new Insets(20));
         layout.getChildren().addAll(btnVoltar);
         layout.setStyle("-fx-alignment: center;");
-
 
         Image image = new Image("BG_JG1.jpg");
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);

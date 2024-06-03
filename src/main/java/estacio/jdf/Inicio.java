@@ -34,13 +34,13 @@ public class Inicio extends Application {
         //Botões da página inicial
         Button btnComecar = new Button("Começar");
         btnComecar.setFont(new Font("Arial", 21));
-        btnComecar.setStyle("-fx-background-color: #2E3031; -fx-text-fill: white; -fx-background-radius: 5px;");
+        btnComecar.setStyle("-fx-background-color: #1e28a7; -fx-text-fill: white; -fx-background-radius: 5px;");
         btnComecar.setOnMouseEntered(e -> {
-            btnComecar.setStyle("-fx-background-color: #787C7E; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnComecar.setStyle("-fx-background-color: #6632C8; -fx-text-fill: white; -fx-background-radius: 5px;");
             btnComecar.setFont(new Font("Arial", 26));
         });
         btnComecar.setOnMouseExited(e -> {
-            btnComecar.setStyle("-fx-background-color: #2E3031; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnComecar.setStyle("-fx-background-color: #1e28a7; -fx-text-fill: white; -fx-background-radius: 5px;");
             btnComecar.setFont(new Font("Arial", 21));
         });
         btnComecar.setOnAction(e -> {
@@ -50,13 +50,13 @@ public class Inicio extends Application {
 
         Button btnhLog = new Button("Consultar histórico");
         btnhLog.setFont(new Font("Arial", 21));
-        btnhLog.setStyle("-fx-background-color: #1e28a7; -fx-text-fill: white; -fx-background-radius: 5px;");
+        btnhLog.setStyle("-fx-background-color: #2E3031; -fx-text-fill: white; -fx-background-radius: 5px;");
         btnhLog.setOnMouseEntered(e -> {
-            btnhLog.setStyle("-fx-background-color: #6632C8; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnhLog.setStyle("-fx-background-color: #787C7E; -fx-text-fill: white; -fx-background-radius: 5px;");
             btnhLog.setFont(new Font("Arial", 26));
         });
         btnhLog.setOnMouseExited(e -> {
-            btnhLog.setStyle("-fx-background-color: #1e28a7; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnhLog.setStyle("-fx-background-color: #2E3031; -fx-text-fill: white; -fx-background-radius: 5px;");
             btnhLog.setFont(new Font("Arial", 21));
         });
         btnhLog.setOnAction(e -> {
