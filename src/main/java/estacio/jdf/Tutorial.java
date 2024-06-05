@@ -81,16 +81,16 @@ public class Tutorial extends Application {
             Button botao = new Button(String.valueOf(c));
             botao.setPrefSize(40, 40);
             if (!botao.getStyle().equals("-fx-background-color: green;") && !botao.getStyle().equals("-fx-background-color: red;"))  {
-                botao.setStyle("-fx-background-color: #3F1616; -fx-text-fill: white; -fx-background-radius: 5px;");
-                DropShadow shadow = new DropShadow();
-                shadow.setColor(Color.WHITE);
-                shadow.setRadius(20);
-                botao.setOnMouseEntered(e -> {
-                    botao.setEffect(shadow);
-                });
-                botao.setOnMouseExited(e -> {
-                    botao.setEffect(null);
-                });
+                botao.setStyle(
+                        "-fx-background-color: linear-gradient(rgb(17, 30, 42), rgb(155, 44, 28)); " +
+                                "-fx-text-fill: white; " +
+                                "-fx-border-color: darkgray; " +
+                                "-fx-border-width: 1px; " +
+                                "-fx-border-radius: 5px; " +
+                                "-fx-background-radius: 5px; " +
+                                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 3, 3);"
+                );
+
             }
             // Primeiro popup explicando quantas chances a pessoa tem até perder
             botao.setOnAction(e -> {

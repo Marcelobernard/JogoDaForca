@@ -24,9 +24,10 @@ public class JogosJogados extends Application {
     public void start(Stage primaryStage) {
         VBox root = new VBox(10);
         root.setPadding(new Insets(20));
+        Font TextoFonte = Font.loadFont(getClass().getResourceAsStream("/fonts/Pixel Emulator.otf"), 24);
 
         Label title = new Label("Últimos Resultados");
-        title.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        title.setFont(TextoFonte);
         title.setStyle("-fx-text-fill: #ffffff;");
 
         VBox resultadosContainer = new VBox(10);
@@ -44,11 +45,11 @@ public class JogosJogados extends Application {
                 String status = resultSet.getString("Status");
 
                 Text text1 = new Text("Jogo " + playedID + ": ");
-                text1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                text1.setFont(Font.font("monospace", FontWeight.BOLD, 16));
                 text1.setFill(Color.WHITE);
 
                 Text text2 = new Text(status);
-                text2.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                text2.setFont(Font.font("monospace", FontWeight.BOLD, 16));
 
                 if (status.equals("Vitória")) {
                     text2.setFill(Color.GREEN);
@@ -64,7 +65,7 @@ public class JogosJogados extends Application {
         }
 
         Button btnVoltar = new Button("Voltar");
-        btnVoltar.setFont(new Font("Arial", 16));
+        btnVoltar.setFont(TextoFonte);
         btnVoltar.setStyle("-fx-background-color: #444444; -fx-text-fill: white; -fx-background-radius: 5px;");
         btnVoltar.setOnMouseEntered(e -> btnVoltar.setStyle("-fx-background-color: gray; -fx-text-fill: white; -fx-background-radius: 5px;"));
         btnVoltar.setOnMouseExited(e -> btnVoltar.setStyle("-fx-background-color: #444444; -fx-text-fill: white; -fx-background-radius: 5px;"));

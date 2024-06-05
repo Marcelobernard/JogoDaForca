@@ -14,34 +14,64 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import java.sql.*;
+import javafx.concurrent.Task;
+import javafx.stage.StageStyle;
 
-//Classe Principal de todo o projeto
-//Ao longo do projeto será visível que
-//todos os println estão marcados como comentário,
-//isso é para impedir a abertura do CMD durante a execução
 public class Inicio extends Application {
     private static final String DATABASE_URL = "jdbc:h2:~/history";
+
     @Override
-    // Configuração da Interface Gráfica
     public void start(Stage primaryStage) {
         primaryStage.getIcons().add(new Image("murloc.png"));
         primaryStage.setTitle("Jogo da Forca");
         primaryStage.setResizable(false);
         primaryStage.setMaximized(false);
 
-        inicializarBancoDeDados();
+        Font TextoFonte = Font.loadFont(getClass().getResourceAsStream("/fonts/Pixel Emulator.otf"), 20);
+        Font TextoFonteGrande = Font.loadFont(getClass().getResourceAsStream("/fonts/Pixel Emulator.otf"), 23);
 
-        //Botões da página inicial
+        Task<Void> databaseInitTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                inicializarBancoDeDados();
+                return null;
+            }
+        };
+
         Button btnComecar = new Button("Começar");
-        btnComecar.setFont(new Font("Arial", 21));
-        btnComecar.setStyle("-fx-background-color: #1e28a7; -fx-text-fill: white; -fx-background-radius: 5px;");
+        btnComecar.setFont(TextoFonte);
+        btnComecar.setStyle(
+                "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                        "-fx-text-fill: white; " +
+                        "-fx-border-color: darkgray; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 5px; " +
+                        "-fx-background-radius: 5px; " +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 3, 3);"
+        );
         btnComecar.setOnMouseEntered(e -> {
-            btnComecar.setStyle("-fx-background-color: #6632C8; -fx-text-fill: white; -fx-background-radius: 5px;");
-            btnComecar.setFont(new Font("Arial", 26));
+            btnComecar.setStyle(
+                    "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-color: darkgray; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(91, 0, 0, 1), 15, 0.5, 0, 0);"
+            );
+            btnComecar.setFont(TextoFonteGrande);
         });
         btnComecar.setOnMouseExited(e -> {
-            btnComecar.setStyle("-fx-background-color: #1e28a7; -fx-text-fill: white; -fx-background-radius: 5px;");
-            btnComecar.setFont(new Font("Arial", 21));
+            btnComecar.setStyle(
+                    "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-color: darkgray; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 3, 3);"
+            );
+            btnComecar.setFont(TextoFonte);
         });
         btnComecar.setOnAction(e -> {
             JogoDaForca jogo = new JogoDaForca();
@@ -49,15 +79,39 @@ public class Inicio extends Application {
         });
 
         Button btnhLog = new Button("Consultar histórico");
-        btnhLog.setFont(new Font("Arial", 21));
-        btnhLog.setStyle("-fx-background-color: #2E3031; -fx-text-fill: white; -fx-background-radius: 5px;");
+        btnhLog.setFont(TextoFonte);
+        btnhLog.setStyle(
+                "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                        "-fx-text-fill: white; " +
+                        "-fx-border-color: darkgray; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 5px; " +
+                        "-fx-background-radius: 5px; " +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 3, 3);"
+        );
         btnhLog.setOnMouseEntered(e -> {
-            btnhLog.setStyle("-fx-background-color: #787C7E; -fx-text-fill: white; -fx-background-radius: 5px;");
-            btnhLog.setFont(new Font("Arial", 26));
+            btnhLog.setStyle(
+                    "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-color: darkgray; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(91, 0, 0, 1), 15, 0.5, 0, 0);"
+            );
+            btnhLog.setFont(TextoFonteGrande);
         });
         btnhLog.setOnMouseExited(e -> {
-            btnhLog.setStyle("-fx-background-color: #2E3031; -fx-text-fill: white; -fx-background-radius: 5px;");
-            btnhLog.setFont(new Font("Arial", 21));
+            btnhLog.setStyle(
+                    "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-color: darkgray; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 3, 3);"
+            );
+            btnhLog.setFont(TextoFonte);
         });
         btnhLog.setOnAction(e -> {
             JogosJogados jogo = new JogosJogados();
@@ -65,15 +119,39 @@ public class Inicio extends Application {
         });
 
         Button btnTutorial = new Button("Tutorial");
-        btnTutorial.setFont(new Font("Arial", 21));
-        btnTutorial.setStyle("-fx-background-color: #CB8800; -fx-text-fill: white; -fx-background-radius: 5px;");
+        btnTutorial.setFont(TextoFonte);
+        btnTutorial.setStyle(
+                "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                        "-fx-text-fill: white; " +
+                        "-fx-border-color: darkgray; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 5px; " +
+                        "-fx-background-radius: 5px; " +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 3, 3);"
+        );
         btnTutorial.setOnMouseEntered(e -> {
-            btnTutorial.setStyle("-fx-background-color: #D6A540; -fx-text-fill: white; -fx-background-radius: 5px;");
-            btnTutorial.setFont(new Font("Arial", 26));
+            btnTutorial.setStyle(
+                    "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-color: darkgray; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(91, 0, 0, 1), 15, 0.5, 0, 0);"
+            );
+            btnTutorial.setFont(TextoFonteGrande);
         });
         btnTutorial.setOnMouseExited(e -> {
-            btnTutorial.setStyle("-fx-background-color: #CB8800; -fx-text-fill: white; -fx-background-radius: 5px;");
-            btnTutorial.setFont(new Font("Arial", 21));
+            btnTutorial.setStyle(
+                    "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-color: darkgray; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 3, 3);"
+            );
+            btnTutorial.setFont(TextoFonte);
         });
         btnTutorial.setOnAction(e -> {
             Tutorial jogo = new Tutorial();
@@ -81,15 +159,39 @@ public class Inicio extends Application {
         });
 
         Button btnSair = new Button("Sair");
-        btnSair.setFont(new Font("Arial", 21));
-        btnSair.setStyle("-fx-background-color: #c82333; -fx-text-fill: white; -fx-background-radius: 5px;");
+        btnSair.setFont(TextoFonte);
+        btnSair.setStyle(
+                "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                        "-fx-text-fill: white; " +
+                        "-fx-border-color: darkgray; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 5px; " +
+                        "-fx-background-radius: 5px; " +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 3, 3);"
+        );
         btnSair.setOnMouseEntered(e -> {
-                btnSair.setStyle("-fx-background-color: #dc3535; -fx-text-fill: white; -fx-background-radius: 5px;");
-                btnSair.setFont(new Font("Arial", 26));
-                });
+            btnSair.setStyle(
+                    "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-color: darkgray; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(91, 0, 0, 1), 15, 0.5, 0, 0);"
+            );
+            btnSair.setFont(TextoFonteGrande);
+        });
         btnSair.setOnMouseExited(e -> {
-                btnSair.setFont(new Font("Arial", 21));
-                btnSair.setStyle("-fx-background-color: #c82333; -fx-text-fill: white; -fx-background-radius: 5px;");
+            btnSair.setFont(TextoFonte);
+            btnSair.setStyle(
+                    "-fx-background-color: linear-gradient(rgb(4, 9, 34), rgb(114, 64, 77)); " +
+                            "-fx-text-fill: white; " +
+                            "-fx-border-color: darkgray; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 5px; " +
+                            "-fx-background-radius: 5px; " +
+                            "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 3, 3);"
+            );
         });
         btnSair.setOnAction(e -> primaryStage.close());
 
@@ -106,21 +208,19 @@ public class Inicio extends Application {
 
         Scene cena = new Scene(layout, 600, 620);
         primaryStage.setScene(cena);
-        primaryStage.show();
+
+        databaseInitTask.setOnSucceeded(event -> {
+            primaryStage.show();
+        });
+
+        Thread thread = new Thread(databaseInitTask);
+        thread.start();
     }
 
-    //Inicialização do banco de dados
-    //Aqui fará a primeira conexão e a verificação se o arquivo
-    //já foi aberto alguma vez ou não para decidir se há necessidade
-    //de criar a TABLE do banco de dados
-    public static void main(String[] args) {
-        launch(args);
-    }
     private void inicializarBancoDeDados() {
         try {
             Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
-            //System.out.println("Driver H2 não encontrado");
             return;
         }
         try (Connection connection = DriverManager.getConnection(DATABASE_URL);
@@ -128,7 +228,10 @@ public class Inicio extends Application {
             String query = "CREATE TABLE IF NOT EXISTS Played (PlayedID INT, Status VARCHAR(255))";
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            //System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
         }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
